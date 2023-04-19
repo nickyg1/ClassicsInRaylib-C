@@ -13,21 +13,20 @@ int main(void)
     const int screenWidth = 800;
     const int screenHeight = 600;
     
-    struct Actor
- player1 = {10,screenHeight/2 , 30, 100, RED}; 
-    
+    struct Actor player1 = {10,screenHeight/2 , 30, 100, RED}; 
+    struct Actor ball = {screenWidth/2, screenHeight/2, 20,20, WHITE};    
     InitWindow(screenWidth, screenHeight, "raylib pong clone");
 
     SetTargetFPS(60);              
   
     while (!WindowShouldClose())   
     {
-        if(IsKeyDown(KEY_DOWN))
+        if(IsKeyDown(KEY_DOWN) && player1.posY < screenHeight - player1.height)
         {
             player1.posY += 10;
         }  
         
-        if(IsKeyDown(KEY_UP))
+        if(IsKeyDown(KEY_UP) && player1.posY > 0)
         {
             player1.posY -= 10;
         }
@@ -37,9 +36,8 @@ int main(void)
             ClearBackground(BLACK);
             
             DrawRectangle(player1.posX ,player1.posY, player1.width, player1.height, player1.color); 
-
-            DrawText("Actor
-         1 can now move up and down", 190, 200, 20, LIGHTGRAY);
+            DrawRectangle(ball.posX, ball.posY, ball.width, ball.height, ball.color); 
+            DrawText("Actor can now move up and down", 190, 200, 20, LIGHTGRAY);
 
         EndDrawing();
        
