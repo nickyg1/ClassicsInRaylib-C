@@ -1,6 +1,6 @@
 #include "raylib.h"
 
-struct Player{
+struct Actor{
     float posX;
     float posY;
     float width;
@@ -13,7 +13,8 @@ int main(void)
     const int screenWidth = 800;
     const int screenHeight = 600;
     
-    struct Player player1 = {10,screenHeight/2 , 30, 100, RED}; 
+    struct Actor
+ player1 = {10,screenHeight/2 , 30, 100, RED}; 
     
     InitWindow(screenWidth, screenHeight, "raylib pong clone");
 
@@ -37,7 +38,8 @@ int main(void)
             
             DrawRectangle(player1.posX ,player1.posY, player1.width, player1.height, player1.color); 
 
-            DrawText("Player 1 can now move up and down", 190, 200, 20, LIGHTGRAY);
+            DrawText("Actor
+         1 can now move up and down", 190, 200, 20, LIGHTGRAY);
 
         EndDrawing();
        
