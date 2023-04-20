@@ -15,6 +15,9 @@ int main(void)
     
     struct Actor player1 = {10,screenHeight/2 , 30, 100, RED}; 
     struct Actor ball = {screenWidth/2, screenHeight/2, 20,20, WHITE};    
+    float ballVelocityX = 10;
+    float ballVelocityY = 10; 
+
     InitWindow(screenWidth, screenHeight, "raylib pong clone");
 
     SetTargetFPS(60);              
@@ -30,7 +33,19 @@ int main(void)
         {
             player1.posY -= 10;
         }
+        if(ball.posX < 0 || ball.posX > (screenWidth - ball.width) )
+        {
+            ballVelocityX =  -1 * ballVelocityX;
+        }
 
+         if(ball.posY < 0 || ball.posY > (screenHeight - ball.width) )
+        {
+            ballVelocityY =  -1 * ballVelocityY;
+        }
+
+        ball.posX += ballVelocityX;
+        ball.posY += ballVelocityY;
+            
         BeginDrawing();
 
             ClearBackground(BLACK);
