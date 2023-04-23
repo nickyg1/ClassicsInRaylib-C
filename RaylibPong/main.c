@@ -92,7 +92,7 @@ int main(void)
             ClearBackground(BLACK);
             
             DrawRectangle(player1.posX ,player1.posY, player1.width, player1.height, player1.color);
-              DrawRectangle(player2.posX ,player2.posY, player2.width, player2.height, player2.color);
+            DrawRectangle(player2.posX ,player2.posY, player2.width, player2.height, player2.color);
             DrawRectangle(ball.posX, ball.posY, ball.width, ball.height, ball.color); 
             DrawText(TextFormat(" %d:%d", score1,score2), screenWidth * 0.5f - 50, 10, 50, LIGHTGRAY);
 
