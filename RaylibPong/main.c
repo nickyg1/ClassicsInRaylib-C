@@ -28,10 +28,11 @@ int main(void)
       
     InitWindow(screenWidth, screenHeight, "raylib pong clone");
 
-    SetTargetFPS(60);              
+    SetTargetFPS(30);              
   
     while (!WindowShouldClose())   
     {
+        //Player input 
         if(IsKeyDown(KEY_DOWN) && player1.posY < screenHeight - player1.height)
         {
             player1.posY += 10;
@@ -41,6 +42,7 @@ int main(void)
             player1.posY -= 10;
         }
 
+        //AI Movement 
         if(ballVelocityY < 0 && player2.posY > 0)
         {
             player2.posY -= 6;
@@ -54,6 +56,7 @@ int main(void)
             player2.posY += 0;
         }
 
+        //ball collision physics
         if(ball.posX < 0)
         {
             score2++;
@@ -73,6 +76,7 @@ int main(void)
             ballVelocityY =  -1 * ballVelocityY;
         }
 
+        //Paddle collsion physics 
         if((ball.posX < player1.posX +  player1PaddleWidth
             && ball.posY > player1.posY - player1.height * 0.5f 
             && ball.posY < player1.posY + player1.height) || 
