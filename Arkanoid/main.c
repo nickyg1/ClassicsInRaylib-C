@@ -64,21 +64,22 @@ int main(void)
                 ballVelocityY = -1 * ballVelocityY; 
             }
             
-            if(ball.posY + ball.height >= player.posY  && ball.posX > player.posX  && ball.posX < player.posX + player.width && ballVelocityY > 0)
+            if(ball.posY + ball.height > player.posY  && ball.posX > player.posX  && ball.posX < player.posX + player.width && ballVelocityY > 0)
             {
                 ballVelocityY = -1 * ballVelocityY; 
             }
             
-            /*for(int i = 0; i < brickLayer -1; i++)
+            for(int i = 0; i < brickLayer -1; i++)
             {
-                if(ball.posY >= bricks[i].posY && ball.posX > bricks[i].posX  && ball.posX < bricks[i].posX + bricks[i].width){
-                    bricks[i].posX = 0;
-                    bricks[i].posY = 0;
+                if(ball.posY < bricks[i].posY + 20  && ball.posX > bricks[i].posX && ball.posX  < bricks[i].posX + 50){
+                    bricks[i].posX = 5000;
+                    bricks[i].posY = 5000;
                     bricks[i].width = 0;
                     bricks[i].height = 0;
                     bricks[i].color = BLANK; 
+                    ballVelocityY = -1 * ballVelocityY; 
                 }
-            }*/
+            }
             //Draw Bricks
             for(int i = 0; i < brickLayer -1; i++)
             {
