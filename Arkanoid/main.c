@@ -30,7 +30,7 @@ int main(void)
 
     for(int i = 0; i < brickLayer -1; i++)
     {
-        bricks[i].posX = i * 30;
+        bricks[i].posX = i *  60;
         bricks[i].posY = 1;
         bricks[i].width = 50;
         bricks[i].height = 20;
@@ -64,14 +64,24 @@ int main(void)
                 ballVelocityY = -1 * ballVelocityY; 
             }
             
-            if(ball.posY + ball.height > player.posY  && ball.posX > player.posX  && ball.posX < player.posX + player.width && ballVelocityY > 0)
+            if(ball.posY + ball.height > player.posY  && ball.posX > player.posX  && ball.posX + ball.width < player.posX + player.width && ballVelocityY > 0)
             {
                 ballVelocityY = -1 * ballVelocityY; 
             }
             
-            for(int i = 0; i < brickLayer -1; i++)
+            /*if(ball.posY <= bricks[0].posY + bricks[0].width && ball.posY > bricks[0].posY + bricks[0].height/2 + ballVelocityY && ball.posX > bricks[0].posX  && ball.posX - bricks[0].posX < ball.width + bricks[0].width)
             {
-                if(ball.posY < bricks[i].posY + 20  && ball.posX > bricks[i].posX && ball.posX  < bricks[i].posX + 50){
+                   bricks[0].posX = 5000;
+                    bricks[0].posY = 5000;
+                    bricks[0].width = 0;
+                    bricks[0].height = 0;
+                    bricks[0].color = BLANK; 
+                    ballVelocityY = -1 * ballVelocityY; 
+            }*/
+
+            for(int i = 0; i < brickLayer -1 ; i++)
+            {
+                if(ball.posY <= bricks[i].posY + bricks[i].width && ball.posY > bricks[i].posY + bricks[i].height/2 + ballVelocityY && ball.posX > bricks[i].posX  && ball.posX - bricks[i].posX < ball.width + bricks[i].width){
                     bricks[i].posX = 5000;
                     bricks[i].posY = 5000;
                     bricks[i].width = 0;
@@ -80,12 +90,7 @@ int main(void)
                     ballVelocityY = -1 * ballVelocityY; 
                 }
             }
-            //Draw Bricks
-            for(int i = 0; i < brickLayer -1; i++)
-            {
-                DrawRectangle(bricks[i].posX * 2 , bricks[i].posY * 2 , bricks[i].width, bricks[i].height, bricks[i].color);
-            }
-
+        
             ball.posY += ballVelocityY;
             ball.posX += ballVelocityX;            
             
@@ -94,6 +99,14 @@ int main(void)
             
             //Draw the ball
             DrawRectangle(ball.posX, ball.posY, ball.width, ball.height, ball.color);
+
+                //Draw Bricks
+            for(int i = 0; i < brickLayer -1; i++)
+            {
+                DrawRectangle(bricks[i].posX  , bricks[i].posY  , bricks[i].width, bricks[i].height, bricks[i].color);
+            }
+            
+
 
         EndDrawing();
        
