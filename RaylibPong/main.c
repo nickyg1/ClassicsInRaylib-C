@@ -8,6 +8,8 @@ struct Actor{
     Color color;
 };
 
+typedef enum GameScreen {LOGO = 0, TITLE, GAMEPLAY, ENDING} GameScreen; 
+
 int main(void)
 {
     const int screenWidth = 800;
@@ -28,10 +30,51 @@ int main(void)
       
     InitWindow(screenWidth, screenHeight, "raylib pong clone");
 
+    GameScreen currentScreen = LOGO; 
+    int framesCounter = 0; 
+
     SetTargetFPS(30);              
   
     while (!WindowShouldClose())   
     {
+        switch(currentScreen)
+        {
+            case LOGO:
+            {
+                framesCounter++; 
+
+                if(framesCounter > 30)
+                {
+                    currentScreen = TITLE; 
+                }
+            }break; 
+
+            case TITLE:
+            {
+                if(IsKeyPressed(KEY_ENTER))
+                {
+                    currentScreen = GAMEPLAY;
+                }
+            }break;
+
+            case GAMEPLAY: 
+            {
+                 if(score1 >= 1 || score2>= 1)
+                {
+                    currentScreen = ENDING;
+                }
+
+            }break; 
+
+            case ENDING:
+            {
+            
+            }break; 
+        }
+       
+        
+        if(currentScreen == GAMEPLAY) 
+        {
         //Player input 
         if(IsKeyDown(KEY_DOWN) && player1.posY < screenHeight - player1.height)
         {
@@ -90,15 +133,51 @@ int main(void)
 
         ball.posX += ballVelocityX;
         ball.posY += ballVelocityY;
-            
+        }
+        
+     
         BeginDrawing();
 
-            ClearBackground(BLACK);
+        ClearBackground(BLACK);
+
+        switch(currentScreen)
+        {
+            case LOGO:
+            {
+                // TODO: Draw LOGO screen here!
+                    DrawText("LOADING ... PONG", 20, 20, 40, LIGHTGRAY);
+                    
+            }break;
+            case TITLE:
+            {
+                  DrawRectangle(0, 0, screenWidth, screenHeight, GREEN);
+                    DrawText("PONG READY", 20, 20, 40, DARKGREEN);
+                    DrawText("PRESS ENTER", 120, 220, 20, DARKGREEN);
+            }break; 
+            case GAMEPLAY:
+            {
+                DrawRectangle(player1.posX ,player1.posY, player1.width, player1.height, player1.color);
+                DrawRectangle(player2.posX ,player2.posY, player2.width, player2.height, player2.color);
+                DrawRectangle(ball.posX, ball.posY, ball.width, ball.height, ball.color); 
+                DrawText(TextFormat(" %d:%d", score1,score2), screenWidth * 0.5f - 50, 10, 50, LIGHTGRAY);
+            }break;
+            case ENDING:
+            {
+                 DrawRectangle(0, 0, screenWidth, screenHeight, BLUE);
+                DrawText("GAME", 20, 20, 40, DARKBLUE);
+                char* winner = "";
+                if(score1 > score2)
+                {
+                  winner ="PLAYER 1 WINS!";
+                }
+                else
+                {
+                    winner ="PLAYER 2 WINS!";
+                }
+                DrawText(("%s", winner), 120, 220, 20, DARKBLUE);
+            }
+        }
             
-            DrawRectangle(player1.posX ,player1.posY, player1.width, player1.height, player1.color);
-            DrawRectangle(player2.posX ,player2.posY, player2.width, player2.height, player2.color);
-            DrawRectangle(ball.posX, ball.posY, ball.width, ball.height, ball.color); 
-            DrawText(TextFormat(" %d:%d", score1,score2), screenWidth * 0.5f - 50, 10, 50, LIGHTGRAY);
 
         EndDrawing();
        
