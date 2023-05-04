@@ -29,9 +29,11 @@ int main(void)
     int score2 = 0;
       
     InitWindow(screenWidth, screenHeight, "raylib pong clone");
-
+    InitAudioDevice();
     GameScreen currentScreen = LOGO; 
     int framesCounter = 0; 
+
+    Sound beepSound = LoadSound("resources/sound.ogg");
 
     SetTargetFPS(30);              
   
@@ -127,7 +129,8 @@ int main(void)
             && ball.posY > player2.posY - player2.height * 0.5f 
             && ball.posY < player2.posY + player2.height ) )
         {
-            ballVelocityY =  -1 * ballVelocityY;
+            //ballVelocityY =  -1 * ballVelocityY;
+            PlaySound(beepSound);
             ballVelocityX =  -1 * ballVelocityX;
         }
 
@@ -174,7 +177,7 @@ int main(void)
                 {
                     winner ="PLAYER 2 WINS!";
                 }
-                DrawText(("%s", winner), 120, 220, 20, DARKBLUE);
+                //DrawText(("%s", winner), 120, 220, 20, DARKBLUE);
             }
         }
             
@@ -182,7 +185,10 @@ int main(void)
         EndDrawing();
        
     }
+    UnloadSound(beepSound);
     
+    CloseAudioDevice();
+
     CloseWindow();       
     
 
