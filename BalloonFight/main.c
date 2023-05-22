@@ -166,14 +166,45 @@ void StartScreen()
 void GameScreen()
 {
     struct Actor player = {10,10,10,10,BLUE};
+    struct Actor floor = {0, screenHeight -100, screenWidth * 0.5f, 100, RED};
+    float gravity = 5;
+    int playerVelocityY = gravity;
+    int playerVelocityX = 0; 
+
+    
 
     while (!WindowShouldClose() && gameState == GAME)    
     {
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
+       
+        if(IsKeyDown(KEY_RIGHT))
+        {
+         playerVelocityX = 5;
+        }else if(IsKeyDown(KEY_LEFT))
+        {
+            playerVelocityX = -5;
+        }
+        else{
+           playerVelocityX = 0; 
+        }
+
+
+        if(player.y + 5 + player.height > floor.y && player.x < (floor.x + floor.width) && player.x > floor.x )
+        {
+            playerVelocityY = 0; 
+        }
+        else
+        {
+            playerVelocityY = gravity;
+        }
+
+        player.y += playerVelocityY;
+        player.x += playerVelocityX;
 
         DrawRectangle(player.x, player.y, player.width, player.height, player.color);
+        DrawRectangle(floor.x, floor.y , floor.width, floor.height, floor.color);
         
         EndDrawing();
    }
