@@ -191,18 +191,28 @@ void GameScreen()
         }
 
 
-        if(player.y + 5 + player.height > floor.y && player.x < (floor.x + floor.width) && player.x > floor.x )
+        if(player.y + 5 + player.height > floor.y && player.x < (floor.x + floor.width) && player.x > floor.x  )
         {
             playerVelocityY = 0; 
-        }
+        } 
         else
         {
             playerVelocityY = gravity;
+        }
+        if(IsKeyDown(KEY_SPACE))
+        {
+                playerVelocityY = -5;
         }
 
         player.y += playerVelocityY;
         player.x += playerVelocityX;
 
+        if(player.y > screenHeight)
+        {
+            gameState = STARTSCREEN;
+            GameChanger(); 
+        }
+    
         DrawRectangle(player.x, player.y, player.width, player.height, player.color);
         DrawRectangle(floor.x, floor.y , floor.width, floor.height, floor.color);
         
