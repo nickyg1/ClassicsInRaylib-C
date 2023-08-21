@@ -1,22 +1,8 @@
-#include "raylib.h"
-
-void StartScreen();
-void GameScreen();
-void GameOverScreen();
+#include "main.h"
+#include "levels.h"
 
 void InitGame();
 
-typedef enum GameState {STARTSCREEN = 0, GAME, GAMEOVER} GameState;
-
-struct Actor 
-{
-    int x;
-    int y;
-    int width;
-    int height; 
-    Color color; 
-
-};
 GameState gameState;  
 
 void GameChanger()
@@ -40,7 +26,6 @@ void GameChanger()
             GameOverScreen();
         } break;
     }
-
 }
 
 int main(void)
@@ -55,17 +40,14 @@ int main(void)
     return 0;
 }
 
-const int screenWidth = 640;
-const int screenHeight = 480;
 
 void InitGame()
 {
     gameState = STARTSCREEN; 
     InitWindow(screenWidth, screenHeight, "Balloon Fight Clone");
-
-    SetTargetFPS(60);    
-    
+    SetTargetFPS(60);      
 }
+
 void StartScreen()
 {
     struct Actor startGame = {screenWidth * 0.5f, 100, 100, 100, GREEN};
@@ -114,6 +96,7 @@ void StartScreen()
                
                if(IsKeyPressed(KEY_ENTER))
                {
+                    EndDrawing();
                     gameState = GAME;
                   GameChanger();
                }
@@ -129,7 +112,7 @@ void StartScreen()
                
                 if(IsKeyPressed(KEY_ENTER))
                 {
-                    
+                    EndDrawing();
                    gameState = GAME;
                    GameChanger();
                 
@@ -171,7 +154,6 @@ void GameScreen()
     int playerVelocityY = gravity;
     int playerVelocityX = 0; 
 
-    
 
     while (!WindowShouldClose() && gameState == GAME)    
     {
@@ -190,7 +172,6 @@ void GameScreen()
            playerVelocityX = 0; 
         }
 
-
         if(player.y + 5 + player.height > floor.y && player.x < (floor.x + floor.width) && player.x > floor.x  )
         {
             playerVelocityY = 0; 
@@ -199,6 +180,7 @@ void GameScreen()
         {
             playerVelocityY = gravity;
         }
+        
         if(IsKeyDown(KEY_SPACE))
         {
                 playerVelocityY = -5;
@@ -206,13 +188,25 @@ void GameScreen()
 
         player.y += playerVelocityY;
         player.x += playerVelocityX;
+        
+        if(player.x < 0 )
+        {
+            player.x = screenWidth;
+        } else if (player.x > screenWidth)
+        {
+            player.x = 0;
+        }
 
         if(player.y > screenHeight)
         {
+            EndDrawing();
             gameState = STARTSCREEN;
             GameChanger(); 
+        }else if (player.y < 0)
+        {
+            player.y = 0;
         }
-    
+
         DrawRectangle(player.x, player.y, player.width, player.height, player.color);
         DrawRectangle(floor.x, floor.y , floor.width, floor.height, floor.color);
         
