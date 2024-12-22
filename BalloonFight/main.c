@@ -50,7 +50,7 @@ void InitGame()
 
 void StartScreen()
 {
-    struct Actor startGame = {screenWidth * 0.5f, 100, 100, 100, GREEN};
+    struct Actor startGame = {screenWidth * 0.5f,100 ,100, 100, GREEN};
     struct Actor secondPlayerGame = {screenWidth * 0.5f - 100, 160, 100, 100, GREEN};
     struct Actor exitGame = {screenWidth * 0.5f, 220, 100, 100, GREEN};
 
@@ -63,7 +63,8 @@ void StartScreen()
 
     while (!WindowShouldClose() && gameState == STARTSCREEN)    
     {
-
+        //how to make this more generic and not just hard coded to the key board
+        // is Key_up a bool? What is it returning? 
         if(IsKeyPressed(KEY_UP))
         {
             counter--;
@@ -163,14 +164,18 @@ void GameScreen()
        
         if(IsKeyDown(KEY_RIGHT))
         {
+ 
          playerVelocityX = 5;
-        }else if(IsKeyDown(KEY_LEFT))
+        }
+        else if(IsKeyDown(KEY_LEFT))
         {
             playerVelocityX = -5;
         }
         else{
            playerVelocityX = 0; 
         }
+
+        //how to make a generic collision detection system? 
 
         if(player.y + 5 + player.height > floor.y && player.x < (floor.x + floor.width) && player.x > floor.x  )
         {
@@ -202,6 +207,8 @@ void GameScreen()
             EndDrawing();
             gameState = STARTSCREEN;
             GameChanger(); 
+            return; 
+            
         }else if (player.y < 0)
         {
             player.y = 0;
